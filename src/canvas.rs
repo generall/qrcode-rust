@@ -1973,16 +1973,14 @@ impl Canvas {
     /// penalty score.
     pub fn apply_best_mask(&self) -> Self {
         match self.version {
-            Version::Normal(_) => ALL_PATTERNS_QR.iter(),
-            Version::Micro(_) => ALL_PATTERNS_MICRO_QR.iter(),
+            Version::Normal(_) => Some(&MaskPattern::Checkerboard),
+            Version::Micro(_) => Some(&MaskPattern::Diamonds),
         }
         .map(|ptn| {
             let mut c = self.clone();
             c.apply_mask(*ptn);
             c
-        })
-        .min_by_key(Self::compute_total_penalty_scores)
-        .expect("at least one pattern")
+        }).expect("at least one pattern")
     }
 
     /// Convert the modules into a vector of booleans.

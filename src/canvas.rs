@@ -1973,7 +1973,7 @@ impl Canvas {
     /// penalty score.
     pub fn apply_best_mask(&self) -> Self {
         match self.version {
-            Version::Normal(_) => Some(&MaskPattern::Checkerboard),
+            Version::Normal(_) => Some(&MaskPattern::DiagonalLines),
             Version::Micro(_) => Some(&MaskPattern::Diamonds),
         }
         .map(|ptn| {
